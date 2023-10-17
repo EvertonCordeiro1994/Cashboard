@@ -136,6 +136,7 @@ function criarPainel(){
 
 
   var soma = document.createElement("div");
+  soma.id="soma";
   soma.classList.add("text-center", "text-white");
   soma.textContent = "R$00,00";
 
@@ -342,11 +343,21 @@ var btnWarning = document.createElement("button");
     () =>{  
      var objeto = {nome: inputNome.value, valor: inputValor.value};
 
-    dadosValores.push(objeto.valor);
+    dadosValores.push(Number(objeto.valor));
     dadosNomes.push(objeto.nome);
- 
+    var valorSoma = dadosValores.reduce(function(accumulator, currentValue) {
+  return accumulator + currentValue;
+}, 0);
+  
+
+   var somaFormatada = parseFloat(valorSoma).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+  document.getElementById("soma").textContent = somaFormatada ;
+
+
+
     console.log("nome = " + dadosNomes, "valores = " + dadosValores);
     criarGrupo();
-
+    
     });
  };
