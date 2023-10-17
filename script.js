@@ -6,6 +6,9 @@ addEventListener('load', function(e) {
 
 var cor1 = "rgb(51, 204, 204)";
 
+var dadosValores = [];
+var dadosNomes = [];
+
 
 var iconPlus = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="white" stroke-dasharray="18" stroke-dashoffset="18" stroke-linecap="round" stroke-Edith="2"><path d="M12 5V19"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.4s" dur="0.3s" values="18;0"/></path><path d="M5 12H19"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="18;0"/></path></g></svg>`;
 
@@ -21,7 +24,7 @@ function funcaoModal() {
 
   var modalCard = document.createElement("div");
   modalCard.id = "modalCard";
-  modalCard.classList.add("card", "m-auto");
+  modalCard.classList.add("card", "m-auto", "bg-dark");
   modalCard.style.width = "90%";
   
   var modalHeader = document.createElement("div");
@@ -29,7 +32,7 @@ function funcaoModal() {
 
   var modalTitulo = document.createElement("h5");
   modalTitulo.id = "titulo";
-  modalTitulo.classList.add("card-title");
+  modalTitulo.classList.add("card-title", "text-white");
   modalTitulo.innerHTML = "Adicionar novo Grupo";
 
   var modalCorpo = document.createElement("div");
@@ -170,11 +173,13 @@ function addBarra(){
 
 
 function criarGrupo() {
-   var nome = "MXRF11";
-   var valor = "25";
+   var nome = dadosNomes[dadosNomes.length - 1];
+   console.log("criarGrupo: ", "nomes = " + dadosNomes, "valor 1= " + valor);
+   var valor = dadosValores[dadosNomes.length - 1];
+  console.log("criarGrupo: ", "nomes = " + dadosNomes, "valor 2= " + valor);
    var cor = "#ffffff";
    var nomeFormatado = nome.trim();
-   var valorFormatado = Number(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2});
+   var valorFormatado = parseFloat(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2});;
 
    var iconOpen = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g transform="rotate(-90 12 12)"><g fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="20" stroke-dashoffset="20" d="M3 3V21"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="20;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M21 12H7.5"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.4s" dur="0.2s" values="15;0"/></path><path stroke-dasharray="12" stroke-dashoffset="12" d="M7 12L14 19M7 12L14 5"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="12;0"/></path></g></g></svg>`;
 
@@ -189,8 +194,8 @@ function criarGrupo() {
 
   
   var card = document.createElement("div");
-  card.classList.add("card-grupo", "m-auto", "w-75", "mt-3", "border", "rounded", "rounded-4");
-  card.style.backgroundColor = "rgb(43, 48, 53)";
+  card.classList.add("card-grupo", "m-auto", "w-75", "mt-3", "border", "rounded", "rounded-4", "bg-dark");
+  
 
 
   var header = document.createElement("div");
@@ -258,56 +263,90 @@ function criarGrupo() {
 
 function dados() {
   var areaDados  = document.createElement("div");
+  areaDados.classList.add("d-flex", "m-auto", "flex-column", "justify-content-center", "text-center");
+
   var inputNome  = document.createElement("input");
+  inputNome.style.width = "80%";
+  inputNome.classList.add("m-auto", "mb-2");
+
   var inputValor = document.createElement("input");
+  inputValor.style.width = "80%";
+  inputValor.type = "text";
+  inputValor.classList.add("m-auto", "mb-2");
+
   var areaBtns   = document.createElement("div");
+  areaBtns.classList.add("d-flex", "m-auto", "justify-content-around", "mb-2", "mt-2");
+  areaBtns.style.width = "100%";
   
   var btnPrimary = document.createElement("button");
   btnPrimary.type ="button";
-  btnPrimary.classList.add("btn", "btn-primary");
-
+  btnPrimary.classList.add("btn", "btn-primary", "rounded-circle");
+  btnPrimary.style.padding ="1rem";
+ 
   var btnSecondary = document.createElement("button");
- btnSecondary.type ="button";
- btnSecondary.classList.add("btn", "btn-secondary"); 
-
+  btnSecondary.type ="button";
+  btnSecondary.classList.add("btn", "btn-secondary", "rounded-circle");
+  btnSecondary.style.padding ="1rem";
 
  var btnDanger = document.createElement("button"); 
- btnSecondary.type ="button";
- btnSecondary.classList.add("btn", "btn-danger"); 
+ btnDanger.type ="button";
+ btnDanger.classList.add("btn", "btn-danger", "rounded-circle");
+ btnDanger.style.padding ="1rem"; 
 
  var btnSuccess = document.createElement("button"); 
- btnSecondary.type ="button";
- btnSecondary.classList.add("btn", "btn-success"); 
+ btnSuccess.type ="button";
+ btnSuccess.classList.add("btn", "btn-success", "rounded-circle");
+ btnSuccess.style.padding ="1rem"; 
 
 var btnWarning = document.createElement("button");
- btnSecondary.type ="button";
- btnSecondary.classList.add("btn", "btn-warning"); 
+ btnWarning.type ="button";
+ btnWarning.classList.add("btn", "btn-warning", "rounded-circle");
+ btnWarning.style.padding ="1rem"; 
 
 
  var btnInfo = document.createElement("button"); 
- btnSecondary.type ="button";
- btnSecondary.classList.add("btn", "btn-info"); 
+ btnInfo.type ="button";
+ btnInfo.classList.add("btn", "btn-info", "rounded-circle");
+ btnInfo.style.padding ="1rem"; 
 
  var btnLight = document.createElement("button"); 
- btnSecondary.type ="button";
- btnSecondary.classList.add("btn", "btn-light"); 
+ btnLight.type ="button";
+ btnLight.classList.add("btn", "btn-light", "rounded-circle");
+ btnLight.style.padding ="1rem";
 
 
 
 
 
 
-  var btnDados =     
+  var btnAddDados =     
   document.createElement("button");
-  btnDados.textContent = "adicionar";
+  btnAddDados.classList.add("btn", "btn-primary", "m-auto", "mb-2", "mt-2");
+  btnAddDados.textContent = "adicionar";
+  btnAddDados.style.width = "50%";
   
   areaDados.appendChild(inputNome);
   areaDados.appendChild(inputValor);
-  areaDados.appendChild(btnDados);
+  areaDados.appendChild(areaBtns);
+  areaBtns.appendChild(btnPrimary);
+  areaBtns.appendChild(btnSecondary);
+  areaBtns.appendChild(btnDanger);
+  areaBtns.appendChild(btnSuccess);
+  areaBtns.appendChild(btnWarning);
+  areaBtns.appendChild(btnInfo);
+  areaBtns.appendChild(btnLight);
+  areaDados.appendChild(btnAddDados);
   modalCorpo.appendChild(areaDados);
+  
+  btnAddDados.addEventListener("click", 
+    () =>{  
+     var objeto = {nome: inputNome.value, valor: inputValor.value};
 
-  btnDados.addEventListener("click", 
-    () =>  criarGrupo()
-    );
+    dadosValores.push(objeto.valor);
+    dadosNomes.push(objeto.nome);
+ 
+    console.log("nome = " + dadosNomes, "valores = " + dadosValores);
+    criarGrupo();
+
+    });
  };
-
