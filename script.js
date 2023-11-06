@@ -1,9 +1,4 @@
-addEventListener('load', () => app());
-
-let dadosValores = [];
-let dadosNomes = [];
-let identificador = 0;
-
+addEventListener('load', app);
 
 const iconPlus = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="white" stroke-dasharray="18" stroke-dashoffset="18" stroke-linecap="round" stroke-Edith="2"><path d="M12 5V19"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.4s" dur="0.3s" values="18;0"/></path><path d="M5 12H19"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="18;0"/></path></g></svg>`;
 
@@ -18,9 +13,86 @@ const iconMenu =`<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" 
 
 const iconEdit =`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="20" stroke-dashoffset="20" d="M3 21H21"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="20;0"/></path><path stroke-dasharray="44" stroke-dashoffset="44" d="M7 17V13L17 3L21 7L11 17H7"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.4s" dur="0.6s" values="44;0"/></path><path stroke-dasharray="8" stroke-dashoffset="8" d="M14 6L18 10"><animate fill="freeze" attributeName="stroke-dashoffset" begin="1s" dur="0.2s" values="8;0"/></path></g></svg>`;
 
+const items = [];
 
 function app(){
-   const modalBackground =   
+
+  const navbar = document.createElement("nav");
+  navbar.classList.add("d-flex", "flex-row", 
+  "justify-content-between");
+
+  const navbarTitulo = document.createElement("h5");
+  navbarTitulo.textContent = "Cashbord";
+  navbarTitulo.classList.add("text-center", 
+  "text-white");
+  navbarTitulo.style.padding = "15px";
+
+  const navbarBotao = 
+  document.createElement("button");
+  navbarBotao.id = "navbarBotao";
+  navbarBotao.innerHTML = iconPlus;
+  navbarBotao.style.border = "none";
+  navbarBotao.style.background = "none";
+  navbarTitulo.style.color = "rgb(51, 204, 204)";
+
+
+  const dataAtual = new Date();
+  const mesesDoAno = [
+  "Janeiro", "Fevereiro","Março", "Abril", "Maio",           
+  "Junho", "Julho", "Agosto", "Setembro", "Outubro", 
+  "Novembro", "Dezembro"];
+  let mes = mesesDoAno[ dataAtual.getMonth()]; 
+  let mesAtual = mes; 
+  let anoAtual = dataAtual.getFullYear();
+  
+
+  const painel = document.createElement("div");
+  painel.classList.add("card", "m-auto", "bg-dark");
+  painel.style.width = "90%";
+
+  const corpo = document.createElement("div");
+  corpo.classList.add("card-body");
+  
+  const header = document.createElement("h5");
+  header.classList.add("card-title", "text-white", 
+  "text-center");
+  header.innerHTML = mesAtual + " " + anoAtual;
+  
+  const barras = document.createElement("div");
+  barras.id ="barras";
+  barras.classList.add("progress", 
+  "bg-body-tertiary");
+  
+  const linha = document.createElement("hr");
+  linha.style.width = "80%";
+  linha.classList.add("m-auto", "mt-3", "mb-2",  
+  "text-white");
+
+  const totalPainel = document.createElement("div");
+  totalPainel.id ="total";
+  totalPainel.classList.add("text-center", 
+  "text-white");
+  totalPainel.textContent = "R$00,00";
+
+  navbar.appendChild(navbarTitulo);
+  navbar.appendChild(navbarBotao);
+  document.body.appendChild(navbar);
+
+  painel.appendChild(corpo);
+  corpo.appendChild(header);
+  corpo.appendChild(barras);
+  corpo.appendChild(linha);
+  corpo.appendChild(totalPainel);
+  document.body.appendChild(painel);
+
+  navbarBotao.addEventListener("click", modal); 
+}; 
+
+
+
+function modal(){
+
+  const modalBackground =   
   document.createElement("div");
   modalBackground.classList.add("d-flex", 
   "align-items-center", "glasseffect");
@@ -45,15 +117,15 @@ function app(){
   modalTitulo.classList.add("card-title", 
   "text-white");
   modalTitulo.innerHTML = "Adicionar novo Grupo";
+
   const modalBtnFechar =  
   document.createElement("button");
+  modalBtnFechar.id = "modalBtnFechar";
   modalBtnFechar.classList.add("btn-close");
-
 
   const modalCorpo = document.createElement("div");
   modalCorpo.id = "modalCorpo";
   modalCorpo.classList.add("modal-body");
-
 
   const areaDados  = document.createElement("div");
   areaDados.classList.add("d-flex", "m-auto", 
@@ -62,11 +134,13 @@ function app(){
 
   const inputNome  = 
   document.createElement("input");
+  inputNome.id = "inputNome";
   inputNome.style.width = "80%";
   inputNome.classList.add("m-auto", "mb-2");
 
   const inputValor = 
   document.createElement("input");
+  inputValor.id = "inputValor";
   inputValor.style.width = "80%";
   inputValor.type = "text";
   inputValor.classList.add("m-auto", "mb-2");
@@ -111,97 +185,20 @@ function app(){
   "rounded-circle");
   btnWarning.style.padding ="1rem"; 
 
-
   const btnInfo = document.createElement("button"); 
   btnInfo.type ="button";
   btnInfo.classList.add("btn", "btn-info",
   "rounded-circle");
   btnInfo.style.padding ="1rem"; 
 
-  const btnLight = document.createElement("button"); 
-  btnLight.type ="button";
-  btnLight.classList.add("btn", "btn-light", 
-  "rounded-circle");
-  btnLight.style.padding ="1rem";
+  
 
-  var btnAddDados =     
+  const btnAddDados =     
   document.createElement("button");
   btnAddDados.classList.add("btn", "btn-primary", 
   "m-auto", "mb-2", "mt-2");
   btnAddDados.textContent = "adicionar";
   btnAddDados.style.width = "50%";
-
-
-  const navbar = document.createElement("nav");
-  navbar.classList.add("d-flex", "flex-row", 
-  "justify-content-between");
-
-  const navbarTitulo = document.createElement("h5");
-  navbarTitulo.textContent = "Cashbord";
-  navbarTitulo.classList.add("text-center", 
-  "text-white");
-  navbarTitulo.style.padding = "15px";
-
-  const navbarBotao = 
-  document.createElement("button");
-  navbarBotao.innerHTML = iconPlus;
-  navbarBotao.style.border = "none";
-  navbarBotao.style.background = "none";
-  navbarTitulo.style.color = "rgb(51, 204, 204)";
-
-  const dataAtual = new Date();
-  const mesesDoAno = [
-  "Janeiro", "Fevereiro","Março", "Abril", "Maio",           
-  "Junho", "Julho", "Agosto", "Setembro", "Outubro", 
-  "Novembro", "Dezembro"];
-  let mes = mesesDoAno[ dataAtual.getMonth()]; 
-  let mesAtual = mes; 
-  let anoAtual = dataAtual.getFullYear();
-  
-
-  const painel = document.createElement("div");
-  painel.classList.add("card", "m-auto", "bg-dark");
-  painel.style.width = "90%";
-
-  const corpo = document.createElement("div");
-  corpo.classList.add("card-body");
-  
-  const header = document.createElement("h5");
-  header.classList.add("card-title", "text-white", 
-  "text-center");
-  header.innerHTML = mesAtual + " " + anoAtual;
-  
-  const barras = document.createElement("div");
-  barras.classList.add("progress", 
-  "bg-body-tertiary");
-  
-  
-
-  const linha = document.createElement("hr");
-  linha.style.width = "80%";
-  linha.classList.add("m-auto", "mt-3", "mb-2",  
-  "text-white");
-
-  var totalPainel = document.createElement("div");
-  totalPainel.classList.add("text-center", 
-  "text-white");
-  totalPainel.textContent = "R$00,00";
-
-
-
-  
-const progressBar = document.createElement('div');
-  progressBar.setAttribute('role', 'progressbar');
-  progressBar.style.width = '0%';
-  progressBar.setAttribute('aria-valuenow', '0');
-  progressBar.setAttribute('aria-valuemin', '0');
-  progressBar.setAttribute('aria-valuemax', '100');
-
-
-  
-
-
-
 
   modalBackground.appendChild(modalCard);
   modalCard.appendChild(modalCorpo);
@@ -215,248 +212,153 @@ const progressBar = document.createElement('div');
   areaBtns.appendChild(btnSuccess);
   areaBtns.appendChild(btnWarning);
   areaBtns.appendChild(btnInfo);
-  areaBtns.appendChild(btnLight);
   areaDados.appendChild(btnAddDados);
   modalCorpo.appendChild(areaDados);
   modalHeader.appendChild(modalTitulo);
   modalHeader.appendChild(modalBtnFechar);
-
-  navbar.appendChild(navbarTitulo);
-  navbar.appendChild(navbarBotao);
-  document.body.appendChild(navbar);
+  document.body.appendChild(modalBackground);
 
 
-  painel.appendChild(corpo);
-  corpo.appendChild(header);
-  corpo.appendChild(barras);
-  corpo.appendChild(linha);
-  corpo.appendChild(totalPainel);
-  document.body.appendChild(painel);
-
-
-
-
-  btnAddDados.addEventListener("click",   
-   () => { 
-   let objeto = {
-      nome: inputNome.value,
-      valor: inputValor.value
-    };
-
-    dadosValores.push(Number(objeto.valor));
-    dadosNomes.push(objeto.nome);
-
-    let soma = dadosValores.reduce(function  
-      (acumulador, valorAtual) {
-        return acumulador + valorAtual;
-      }, 0);
-
-     let name = objeto.nome;
-     let price = Number(objeto.valor);
-
-     const porcentagemIndividual = 
-     (price / soma) * 100;
-    
-
-     let nomeFormatado = name.trim();
-     let priceFormatado = 
-     price.toLocaleString('pt-BR', 
-      {
-        style: 'currency',
-        currency: 'BRL',
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
-      
-
-     let totalFormatado =  
-    parseFloat(soma).toLocaleString('pt-BR', 
-      {
-        style: 'currency',
-        currency: 'BRL',
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
-      
-      
-      document.body.removeChild (modalBackground);
-
-      totalPainel.textContent = totalFormatado;
-
-
-      const progressBar =    
-      document.createElement('div');
-      progressBar.id = identificador;
-      progressBar.setAttribute('role',  
-      'progressbar');
-      progressBar.style.width = 
-      porcentagemIndividual + '%';
-      progressBar.setAttribute('aria-valuenow', 
-      porcentagemIndividual);
-      progressBar.setAttribute('aria-valuemin', 
-      '0');
-      progressBar.setAttribute('aria-valuemax', 
-      '100');
-      progressBar.textContent = 
-      porcentagemIndividual;
-      
-
-      
-
-      const cardGrupo =  
-      document.createElement("div");
-      cardGrupo.classList.add("card-grupo", 
-      "m-auto", "w-75", "mt-3", "border", "rounded", 
-      "rounded-4", "bg-dark");
+  modalBackground.addEventListener('click', (e) => 
+ (e.target === modalBackground || 
+  e.target === modalBtnFechar) &&  
+  document.body.removeChild(modalBackground));
   
-      const headerGrupo = 
-      document.createElement("div");
-      headerGrupo.classList.add("header-group", 
-      "justify-content-around", "d-flex",  
-      "flex-row", );
-
-      const botao1Grupo = 
-      document.createElement("button");
-      botao1Grupo.id = "acordeon";
-      botao1Grupo.classList.add("btn");
-      botao1Grupo.innerHTML = iconOpen;
-      botao1Grupo.style.background = "none";
- 
-      let nomeGrupo = document.createElement("h2");
-      nomeGrupo.classList.add("text-center", 
-      "text-white");
-      nomeGrupo.textContent = nomeFormatado;
-  
-  
-      const botao2Grupo = 
-      document.createElement("button");
-      botao2Grupo.id = "addTransacao";
-      botao2Grupo.classList.add("btn");
-      botao2Grupo.innerHTML = iconPlus;
-      botao2Grupo.style.background = "none";
-
-      const footerGrupo =  
-      document.createElement("div");
-      footerGrupo.classList.add("footer-grupo",  
-      "justify-content-around", "d-flex", 
-      "flex-flex-row", "justify-content-around");
-
-      const botao3Grupo = 
-      document.createElement("button");
-      botao3Grupo.id = "abrirGrafico";
-      botao3Grupo.classList.add("btn");
-      botao3Grupo.innerHTML = iconGrafico;
-      botao3Grupo.style.background = "none";
-  
-      let valorGrupo = document.createElement("h3");
-      valorGrupo.id = "valorGrupo";
-      valorGrupo.classList.add("text-center");
-      valorGrupo.style.color = "rgb(140, 140, 140)";
-      valorGrupo.textContent = priceFormatado;
-      const botao4Grupo = 
-      document.createElement("button");
-      botao4Grupo.id = "menuGrupo";
-      botao4Grupo.classList.add("btn");
-      botao4Grupo.innerHTML = iconMenu;
-      botao4Grupo.style.background = "none";
-
-  
-
-      
-
-
-      
-     btnPrimary.addEventListener("click", () => { 
-       progressBar.classList.add("progress-bar", 
-       "bg-primary");
-       nomeGrupo.classList.add("text-center", 
-       "text-primary")
-     });
-
-     btnSecondary.addEventListener("click", () => { 
-       
-       progressBar.classList.add("progress-bar", 
-       "bg-secondary")
-
-       nomeGrupo.classList.add("text-center",
-       "text-secondary")
-     });
-
-  btnDanger.addEventListener("click", () => {
-    
-    progressBar.classList.add("progress-bar", 
-    "bg-danger");
-    nomeGrupo.classList.add("text-center",
-    "text-danger")
-  });
-
-  btnSuccess.addEventListener("click", () => {
-    
-    progressBar.classList.add("progress-bar", 
-    "bg-success");
-    nomeGrupo.classList.add("text-center",
-    "text-success")
-  });
-
-  btnWarning.addEventListener("click", () => {
-    
-    progressBar.classList.add("progress-bar", 
-    "bg-warning");
-    nomeGrupo.classList.add("text-center", 
-    "text-warning")
-  });
-
-  btnInfo.addEventListener("click", () => {
-   
-    progressBar.classList.add("progress-bar", 
-    "bg-info");
-    nomeGrupo.classList.add("text-center",
-    "text-info")
-  });
-
-  btnLight.addEventListener("click", () => {
-  
-    progressBar.classList.add("progress-bar", 
-    "bg-light");
-    nomeGrupo.classList.add("text-center",
-    "text-light")
-  });
-      
-
-
-      headerGrupo.appendChild(botao1Grupo);
-      headerGrupo.appendChild(nomeGrupo);
-      headerGrupo.appendChild(botao2Grupo);
-      cardGrupo.appendChild(headerGrupo);
-      footerGrupo.appendChild(botao3Grupo);
-      footerGrupo.appendChild(valorGrupo);
-      footerGrupo.appendChild(botao4Grupo);
-      cardGrupo.appendChild(footerGrupo);
-
-      barras.appendChild(progressBar);
-      document.body.appendChild(cardGrupo)
-
-   
-  }); 
-
-
-  
-modalBtnFechar.addEventListener("click", () =>  
-  document.body.removeChild (modalBackground));
-
-
-  window.addEventListener('click', (event) =>
-    event.target == modalBackground && 
-    document.body.removeChild (modalBackground)
-   ); 
-  
-  navbarBotao.addEventListener("click", 
-    () =>  
-       document.body.appendChild(modalBackground)
-  );
-
-
-
-
+ btnAddDados.addEventListener('click',addItem);
 
 };
+
+function criarGrupo(nome, valor){
+
+  const cardGrupo =  
+  document.createElement("div");
+  cardGrupo.classList.add("card-grupo", 
+  "m-auto", "w-75", "mt-3", "border", "rounded", 
+  "rounded-4", "bg-dark");
+  
+  const headerGrupo = 
+  document.createElement("div");
+  headerGrupo.classList.add("header-group", 
+  "justify-content-around", "d-flex",  
+  "flex-row", );
+
+  const botao1Grupo = 
+  document.createElement("button");
+  botao1Grupo.id = "acordeon";
+  botao1Grupo.classList.add("btn");
+  botao1Grupo.innerHTML = iconOpen;
+  botao1Grupo.style.background = "none";
+ 
+  const nomeGrupo = document.createElement("h2");
+  nomeGrupo.classList.add("text-center", 
+  "text-white");
+  nomeGrupo.textContent = nome.trim();
+  
+  const botao2Grupo = 
+  document.createElement("button");
+  botao2Grupo.id = "addTransacao";
+  botao2Grupo.classList.add("btn");
+  botao2Grupo.innerHTML = iconPlus;
+  botao2Grupo.style.background = "none";
+
+  const footerGrupo =  
+  document.createElement("div");
+  footerGrupo.classList.add("footer-grupo",  
+  "justify-content-around", "d-flex", 
+  "flex-flex-row", "justify-content-around");
+
+  const botao3Grupo = 
+  document.createElement("button");
+  botao3Grupo.id = "abrirGrafico";
+  botao3Grupo.classList.add("btn");
+  botao3Grupo.innerHTML = iconGrafico;
+  botao3Grupo.style.background = "none";
+  
+  const valorGrupo = document.createElement("h3");
+  valorGrupo.id = "valorGrupo";
+  valorGrupo.classList.add("text-center");
+  valorGrupo.style.color = "rgb(140, 140, 140)";
+  valorGrupo.textContent = Number(valor).toLocaleString('pt-BR',{style: 'currency',
+     currency: 'BRL',    
+     minimumFractionDigits: 2,
+     maximumFractionDigits: 2
+      });
+
+  const botao4Grupo = 
+  document.createElement("button");
+  botao4Grupo.id = "menuGrupo";
+  botao4Grupo.classList.add("btn");
+  botao4Grupo.innerHTML = iconMenu;
+  botao4Grupo.style.background = "none";
+
+  headerGrupo.appendChild(botao1Grupo);
+  headerGrupo.appendChild(nomeGrupo);
+  headerGrupo.appendChild(botao2Grupo);
+  cardGrupo.appendChild(headerGrupo);
+  footerGrupo.appendChild(botao3Grupo);
+  footerGrupo.appendChild(valorGrupo);
+  footerGrupo.appendChild(botao4Grupo);
+  cardGrupo.appendChild(footerGrupo);
+  document.body.appendChild(cardGrupo);
+
+};
+
+
+function criarBarra(tamanho){
+
+  const localBarras = document.getElementById('barras');
+  const progressBar = document.createElement('div'); 
+  progressBar.classList.add("bg-info");
+  progressBar.setAttribute('role', 'progressbar');           
+  progressBar.style.width = `${tamanho}%`;
+  progressBar.setAttribute('aria-valuenow', tamanho);
+  progressBar.setAttribute('aria-valuemin', '0');
+  progressBar.setAttribute('aria-valuemax', '100');
+  progressBar.textContent = tamanho.toFixed(2);
+
+  localBarras.appendChild(progressBar);
+  
+};
+
+
+
+
+
+function addItem() {
+  const itemName = document.getElementById("inputNome").value;
+  const itemValue = parseFloat(document.getElementById("inputValor").value);
+
+  if (itemName && !isNaN(itemValue)) {
+   items.push({ name: itemName, value: itemValue });
+   updateList();
+   document.getElementById("inputNome").value = "";
+   document.getElementById("inputValor").value = "";
+    }
+};
+
+
+function updateList() {
+  let totalValue = 0;
+  items.forEach(item => totalValue += item.value);    
+  items.forEach(item => {
+    const percent = (item.value/ totalValue) * 100;  
+    const excluirBarra = 
+    document.getElementById('barras'); 
+    const ultimoFilho =
+    excluirBarra.firstElementChild;
+    (ultimoFilho) &&  
+    excluirBarra.removeChild(ultimoFilho);
+    criarBarra(percent);
+    document.body.removeChild(
+    document.body.lastChild);
+    criarGrupo(item.name, item.value);
+  });
+
+  const total = document.getElementById("total");
+  total.textContent = totalValue.toLocaleString('pt-BR',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2});
+};
+
+
+
+
+
